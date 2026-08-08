@@ -51,7 +51,11 @@ public class EquipmentController : ControllerBase{
     [HttpGet]
     public IActionResult GetAllEquipments(){
         var equipments = _equipmentService.GetAllEquipments();
-        var result = equipments.Select(e => new EquipmentResponseDTO{Id = e.Id,Nome = e.Name,Tipo = new EquipmentTypeDTO{Id = e.Type.Id,Nome = e.Type.Name}}).ToList();
+        var result = equipments.Select(e => new EquipmentResponseDTO{
+            Id = e.Id,
+            Nome = e.Name,
+            Tipo = e.Type != null ? new EquipmentTypeDTO{Id = e.Type.Id,Nome = e.Type.Name} : null
+        }).ToList();
         return Ok(new { equipamentos = result });
     }
 }

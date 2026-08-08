@@ -18,7 +18,7 @@ public class AuthController : ControllerBase{
     [HttpPost("register")]
     public IActionResult Register([FromBody] RegisterDTO request){
         //valida
-        var username = request.Username.Trim();
+        var username = request.Username.Trim().ToLower();
         if(string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(request.Password)){ return BadRequest(new{message = "Falta usuário e senha"}); }
         if(username.Length < 3 || username.Length > 30){ return BadRequest(new{message = "Usuário deve ter entre 3 e 30 caracteres"}); }
         if(!IsValidPassword(request.Password)){ return BadRequest(new{message = "Senha deve ser de 8 a 40 caracteres"}); }
@@ -32,7 +32,7 @@ public class AuthController : ControllerBase{
 
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginDTO request){
-        var user = _authService.GetUserByUsername(request.Username);
+        var user = _authService.GetUserByUsername(request.Username.Trim().ToLower());
         if (user == null ||!BCrypt.Net.BCrypt.Verify(request.Password,user.PasswordHash)){ return Unauthorized(new{message = "Usuário ou senha incorretos"}); }
         var token = _tokenService.GenerateToken(user);
         return Ok(new{token,user = new{user.Id,user.Username,user.Role}});

@@ -15,12 +15,13 @@ public class EquipmentService{
         return _context.Equipments.Include(e => e.Type).FirstOrDefault(e => e.Id == id);
     }
 
-    public Equipment? CreateEquipment(string name, int typeId){
-        var type = _context.EquipmentTypes.FirstOrDefault(t => t.Id == typeId);
+    public Equipment? CreateEquipment(string name, int typeID){
+        var type = _context.EquipmentTypes.FirstOrDefault(t => t.Id == typeID);
         if (type == null) return null;
-        var equipment = new Equipment{Name = name,TypeID = typeId};
+        var equipment = new Equipment{Name = name,TypeID = typeID};
         _context.Equipments.Add(equipment);
         _context.SaveChanges();
+        equipment.Type = type;
         return equipment;
     }
 
