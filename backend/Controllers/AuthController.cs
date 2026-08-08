@@ -56,7 +56,7 @@ public class AuthController : ControllerBase{
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginDTO request){
         var user = _context.Users.FirstOrDefault(u => u.Username == request.Username);
-        if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password,user.PasswordHash)){
+        if(user == null || !BCrypt.Net.BCrypt.Verify(request.Password,user.PasswordHash)){
             return Unauthorized(new{message = "Usuário ou senha incorretos"});
         }
         var token = _tokenService.GenerateToken(user);

@@ -4,9 +4,9 @@ using backend.Models;
 namespace backend.services.products;
 
 
-public class ProdutoService{
+public class ProductService{
     private readonly AppDbContext _context;
-    public ProdutoService(AppDbContext context){
+    public ProductService(AppDbContext context){
         _context = context;
     }
     
@@ -14,8 +14,8 @@ public class ProdutoService{
         return _context.Products.FirstOrDefault(p => p.Id == id);
     }
 
-    public Product CreateProduct(String name, decimal price, string description, string imageUrl){
-        Product product = new Product{Name = name, Price = price, Description = description, ImageUrl = imageUrl, CreatedAt = DateTime.UtcNow};
+    public Product CreateProduct(String name, decimal price, string description, int quantity, string imageUrl){
+        Product product = new Product{Name = name,Description = description, Price = price, Quantity = quantity, ImageUrl = imageUrl, CreatedAt = DateTime.UtcNow};
 
         _context.Products.Add(product);
         _context.SaveChanges();
