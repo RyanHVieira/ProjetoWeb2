@@ -5,11 +5,11 @@ namespace Backend.DTOs;
 public class ProductUpdateDTO{
     [Required]
     [MaxLength(100)]
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     [Required]
     [MaxLength(500)]
-    public string Description { get; set; }
+    public string Description { get; set; } = string.Empty;
 
     [Range(0.01, double.MaxValue)]
     public decimal Price { get; set; }
@@ -18,5 +18,5 @@ public class ProductUpdateDTO{
     public int Quantity { get; set; }
 
     [MaxLength(500)]
-    public string ImageUrl { get; set; }
+    public string ImageUrl { get; set; } = string.Empty;
 }
