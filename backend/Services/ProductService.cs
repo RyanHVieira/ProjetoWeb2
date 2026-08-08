@@ -10,7 +10,7 @@ public class ProdutoService{
         _context = context;
     }
     
-    public Product? GetProdutoById(int id){
+    public Product? GetProdutoById(Guid id){
         return _context.Products.FirstOrDefault(p => p.Id == id);
     }
 
@@ -26,7 +26,7 @@ public class ProdutoService{
         return _context.Products.ToList();
     }
 
-    public void UpdateProduct(int id, String name, decimal price, string description, string imageUrl){
+    public void UpdateProduct(Guid id, String name, decimal price, string description, string imageUrl){
         var product = _context.Products.FirstOrDefault(p => p.Id == id);
         if (product != null){
             product.Name = name;
@@ -38,7 +38,7 @@ public class ProdutoService{
         }
     }
 
-    public void DeleteProduct(int id){
+    public void DeleteProduct(Guid id){
         var product = _context.Products.FirstOrDefault(p => p.Id == id);
         if (product != null){
             _context.Products.Remove(product);
