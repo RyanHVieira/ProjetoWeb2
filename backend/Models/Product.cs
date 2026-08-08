@@ -1,17 +1,43 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Backend.Models{
-    [Table("Products")]
-    public class Product{
-        [Column("id")]
-        public int Id { get; set; }
-        [Column("name")]
-        public string Name { get; set; }
-        [Column("price")]
-        public decimal Price { get; set; }
-        [Column("description")]
-        public string Description { get; set; }
-        [Column("image_url")]
-        public string ImageUrl { get; set; }
-    }
+namespace backend.Models;
+
+[Table("Products")]
+public class Product{
+    [Key]
+    [Column("id")]
+    public int Id { get; set; }
+
+    [Required]
+    [MinLength(50)]
+    [MaxLength(100)]
+    [Column("name")]
+    public string Name { get; set; } = string.Empty;
+
+    [Required]
+    [Range(0.01, double.MaxValue)]
+    [Column("price")]
+    public decimal Price { get; set; }
+
+    [Required]
+    [MinLength(10)]
+    [MaxLength(500)]
+    [Column("description")]
+    public string Description { get; set; } = string.Empty;
+
+    [Required]
+    [MaxLength(500)]
+    [Column("image_url")]
+    public string ImageUrl { get; set; } = string.Empty;
+
+    [Required]
+    [MinLength(0)]
+    [Range(0, int.MaxValue)]
+    [Column("quantity")]
+    public int Quantity { get; set; }
+
+    [Required]
+    [Column("created_at")]
+    public DateTime CreatedAt { get; set; }
 }
