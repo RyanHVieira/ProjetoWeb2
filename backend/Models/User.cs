@@ -7,7 +7,7 @@ namespace backend.Models;
 public class User{
     [Key]
     [Column("id")]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Required]
     [MinLength(3)]

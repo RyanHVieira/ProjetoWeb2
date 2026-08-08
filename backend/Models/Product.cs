@@ -7,7 +7,7 @@ namespace backend.Models;
 public class Product{
     [Key]
     [Column("id")]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Required]
     [MinLength(50)]
@@ -32,7 +32,6 @@ public class Product{
     public string ImageUrl { get; set; } = string.Empty;
 
     [Required]
-    [MinLength(0)]
     [Range(0, int.MaxValue)]
     [Column("quantity")]
     public int Quantity { get; set; }
