@@ -3,7 +3,6 @@ using backend.Models;
 
 namespace backend.services.products;
 
-
 public class ProductService{
     private readonly AppDbContext _context;
     public ProductService(AppDbContext context){
@@ -16,7 +15,6 @@ public class ProductService{
 
     public Product CreateProduct(string name, decimal price, string description, int quantity, string imageUrl){
         Product product = new Product{Id = Guid.NewGuid(),Name = name, Description = description, Price = price, Quantity = quantity, ImageUrl = imageUrl, CreatedAt = DateTime.UtcNow};
-    
         _context.Products.Add(product);
         _context.SaveChanges();
         return product;
@@ -44,7 +42,6 @@ public class ProductService{
         if (product == null) return false;
         _context.Products.Remove(product);
         _context.SaveChanges();
-
         return true;
     }
 }
