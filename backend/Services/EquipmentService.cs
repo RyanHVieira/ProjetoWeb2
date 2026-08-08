@@ -15,8 +15,10 @@ public class EquipmentService{
         return _context.Equipments.Include(e => e.Type).FirstOrDefault(e => e.Id == id);
     }
 
-    public Equipment CreateEquipment(string name, int typeID){
-        var equipment = new Equipment{Name = name,TypeID = typeID};
+    public Equipment? CreateEquipment(string name, int typeId){
+        var type = _context.EquipmentTypes.FirstOrDefault(t => t.Id == typeId);
+        if (type == null) return null;
+        var equipment = new Equipment{Name = name,TypeID = typeId};
         _context.Equipments.Add(equipment);
         _context.SaveChanges();
         return equipment;
@@ -26,11 +28,11 @@ public class EquipmentService{
         return _context.Equipments.Include(e => e.Type).ToList();
     }
 
-    public bool UpdateEquipment(int id, string name, int typeID){
+  public bool UpdateEquipment(int id, string? name, int? typeID){
         var equipment = _context.Equipments.FirstOrDefault(e => e.Id == id);
         if (equipment == null) return false;
-        equipment.Name = name;
-        equipment.TypeID = typeID;
+        if (name != null) equipment.Name = name;
+        if (typeID.HasValue) equipment.TypeID = typeID.Value;
         _context.SaveChanges();
         return true;
     }
@@ -40,7 +42,6 @@ public class EquipmentService{
         if (equipment == null) return false;
         _context.Equipments.Remove(equipment);
         _context.SaveChanges();
-
         return true;
     }
 }

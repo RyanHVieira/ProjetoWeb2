@@ -1,6 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using backend.DTOs.Equipment;
-
 
 namespace Backend.DTOs;
 
@@ -11,5 +9,5 @@ public class EquipmentCreateDTO{
     public string Nome { get; set; } = string.Empty;
 
     [Required]
-    public EquipmentTypeDTO Tipo { get; set; } = null!;
+    public int TipoId { get; set; }
 }

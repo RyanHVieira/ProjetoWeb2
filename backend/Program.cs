@@ -7,6 +7,7 @@ using backend.services.equipments;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using backend.Services.equipTypes;
 
 Env.Load();
 
@@ -50,6 +51,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>{options.AddPolicy("ReactPolicy", policy =>{policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();});});
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<EquipTypeService>();
 builder.Services.AddScoped<EquipmentService>();
 builder.Services.AddScoped<JwtService>();
 

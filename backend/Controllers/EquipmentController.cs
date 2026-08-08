@@ -1,3 +1,4 @@
+using backend.DTOs.Equipment;
 using backend.services.equipments;
 using Backend.DTOs;
 using Microsoft.AspNetCore.Authorization;
@@ -17,14 +18,16 @@ public class EquipmentController : ControllerBase{
     [Authorize]
     [HttpPost]
     public IActionResult AddEquipment([FromBody] EquipmentCreateDTO request){
-        var equipment = _equipmentService.CreateEquipment(request.Nome,request.Tipo.Id);
-        return StatusCode(201, equipment);
+        var equipment = _equipmentService.CreateEquipment(request.Nome,request.TipoId);
+        if (equipment == null) return NotFound("Tipo de equipamento não encontrado.");
+        var result = new EquipmentResponseDTO{Id = equipment.Id,Nome = equipment.Name,Tipo = new EquipmentTypeDTO{Id = equipment.Type.Id,Nome = equipment.Type.Name}};
+        return StatusCode(201, result);
     }
 
     [Authorize]
     [HttpPut("{id}")]
-    public IActionResult UpdateEquipment(int id,[FromBody] EquipmentUpdateDTO request){
-        var result = _equipmentService.UpdateEquipment(id,request.Nome,request.Tipo.Id);
+    public IActionResult UpdateEquipment(int id, [FromBody] EquipmentUpdateDTO request){
+        var result = _equipmentService.UpdateEquipment(id,request.Nome,request.Tipo?.Id);
         if (!result) return NotFound();
         return Ok();
     }
@@ -41,13 +44,15 @@ public class EquipmentController : ControllerBase{
     public IActionResult GetEquipment(int id){
         var equipment = _equipmentService.GetEquipmentById(id);
         if (equipment == null) return NotFound();
-        return Ok(equipment);
+        var result = new EquipmentResponseDTO{Id = equipment.Id,Nome = equipment.Name,Tipo = new EquipmentTypeDTO{Id = equipment.Type.Id,Nome = equipment.Type.Name}};
+        return Ok(result);
     }
 
     [HttpGet]
     public IActionResult GetAllEquipments(){
         var equipments = _equipmentService.GetAllEquipments();
-        return Ok(new{equipamentos = equipments});
+        var result = equipments.Select(e => new EquipmentResponseDTO{Id = e.Id,Nome = e.Name,Tipo = new EquipmentTypeDTO{Id = e.Type.Id,Nome = e.Type.Name}}).ToList();
+        return Ok(new { equipamentos = result });
     }
 }
 
