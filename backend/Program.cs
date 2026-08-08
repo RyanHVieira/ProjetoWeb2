@@ -9,11 +9,13 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<AppDbContext>(options =>options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")
+    )
+);
+
 builder.Services.AddCors(options =>{
-    options.AddPolicy("ReactPolicy", policy =>{
-        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();}
-        );
+    options.AddPolicy("ReactPolicy", policy =>{policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();});
     }
 );
 
@@ -30,19 +32,18 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>{
     }
 );
 
-
-builder.Services.AddControllers();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<ProdutoService>();
 builder.Services.AddScoped<JwtService>();
 
 
-//pós builder
 var app = builder.Build();
 
-app.MapControllers();
 app.UseHttpsRedirection();
 app.UseCors("ReactPolicy");
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
+
 
 app.Run();
