@@ -9,7 +9,7 @@ public class AuthService{
         _context = context;
     }
     
-    public User? GetUserById(int id){
+    public User? GetUserById(Guid id){
         return _context.Users.FirstOrDefault(u => u.Id == id);
     }
 
@@ -25,7 +25,7 @@ public class AuthService{
         return _context.Users.ToList();
     }
 
-    public void UpdateUser(int id, string username, string passwordHash, string role){
+    public void UpdateUser(Guid id, string username, string passwordHash, string role){
         var user = _context.Users.FirstOrDefault(u => u.Id == id);
         if (user != null){
             user.Username = username;
@@ -36,7 +36,7 @@ public class AuthService{
         }
     }
 
-    public void DeleteUser(int id){
+    public void DeleteUser(Guid id){
         var user = _context.Users.FirstOrDefault(u => u.Id == id);
         if (user != null){
             _context.Users.Remove(user);
