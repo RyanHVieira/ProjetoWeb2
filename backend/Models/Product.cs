@@ -10,8 +10,8 @@ public class Product{
     public Guid Id { get; set; }
 
     [Required]
-    [MinLength(50)]
-    [MaxLength(100)]
+    [MinLength(3)]
+    [MaxLength(500)]
     [Column("name")]
     public string Name { get; set; } = string.Empty;
 

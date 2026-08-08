@@ -17,7 +17,7 @@ public class User{
 
     [Required]
     [MinLength(6)]
-    [MaxLength(50)]
+    [MaxLength(100)]
     [Column("password_hash")]
     public string PasswordHash { get; set; } = string.Empty;
 

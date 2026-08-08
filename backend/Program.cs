@@ -33,7 +33,7 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>{
 );
 
 builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<ProdutoService>();
+builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<JwtService>();
 
 
