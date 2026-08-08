@@ -3,9 +3,11 @@ using DotNetEnv;
 using backend.Data;
 using backend.services;
 using backend.services.authservice;
-using backend.services.products;
+using backend.services.equipments;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
+
 Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,13 +32,25 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>{
     }
 );
 
+builder.Services.AddSwaggerGen(options =>{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme{
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Token JWT"
+    });
+    options.AddSecurityRequirement(document => new OpenApiSecurityRequirement{[new OpenApiSecuritySchemeReference("Bearer", document)] = []});
+});
+
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>{options.AddPolicy("ReactPolicy", policy =>{policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();});});
 builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<EquipmentService>();
 builder.Services.AddScoped<JwtService>();
 
 var app = builder.Build();
