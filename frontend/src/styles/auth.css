@@ -1,0 +1,124 @@
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: radial-gradient(circle at 50% 0%, #ffffff10 0%, #09090b 70%);
+}
+
+.auth-box {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 32px;
+  background: rgba(24, 24, 27, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 80px rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.auth-header {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.auth-header h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #ffffff 0%, #71717a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.auth-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #a1a1aa;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  color: #d4d4d8;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  color: #fff;
+  background: rgba(9, 9, 11, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: #52525b;
+}
+
+.form-group input:focus {
+  background: rgba(9, 9, 11, 0.9);
+  border-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+.auth-button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  color: #09090b;
+  font-size: 15px;
+  font-weight: 600;
+  background: #ffffff;
+  border: 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.auth-button:hover {
+  background: #e4e4e7;
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+.auth-button:active {
+  transform: translateY(0);
+}
+
+.auth-link {
+  margin-top: 24px;
+  font-size: 14px;
+  text-align: center;
+  color: #71717a;
+}
+
+.auth-link a {
+  font-weight: 500;
+  color: #f4f4f5;
+  text-decoration: none;
+}
+
+.auth-link a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .auth-box {
+    padding: 32px 24px;
+  }
+}
