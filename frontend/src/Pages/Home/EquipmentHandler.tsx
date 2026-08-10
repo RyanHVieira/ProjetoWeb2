@@ -114,7 +114,6 @@ export default function EquipmentHandler() {
               <p className="handler-eyebrow">Painel administrativo</p>
               <h1>{editingId ? "Editar equipamento" : "Gerenciar equipamentos"} </h1>
             </div>
-
             {editingId !== null && ( <button className="secondary-button" onClick={clearForm}>Cancelar edição</button>)}
           </div>
           <section className="handler-panel">

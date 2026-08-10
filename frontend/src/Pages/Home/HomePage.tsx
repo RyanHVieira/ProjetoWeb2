@@ -4,8 +4,16 @@ import Header from "../../Components/Header";
 import { apiFetch } from "../../services/api";
 import "../../styles/home.css";
 
-interface EquipmentType {id: number; nome: string;}
-interface Equipment {id: number; nome: string; tipo?: EquipmentType;}
+interface EquipmentType {
+  id: number;
+  nome: string;
+}
+
+interface Equipment {
+  id: number;
+  nome: string;
+  tipo?: EquipmentType;
+}
 
 function Home() {
   const [equipments, setEquipments] = useState<Equipment[]>([]);
@@ -16,30 +24,32 @@ function Home() {
   useEffect(() => {
     if (!token) return;
     const loadEquipments = async () => {
-      try{
+      try {
         const response = await apiFetch("/equipments");
-        if (!response.ok) { throw new Error("Não foi possível carregar os equipamentos."); }
+        if (!response.ok) throw new Error("Não foi possível carregar os equipamentos."); 
         const data = await response.json();
+        
+        // Log para inspecionar a estrutura real dos dados recebidos
+        console.log("Dados recebidos:", data.equipamentos);
+
         setEquipments(data.equipamentos || []);
-      }catch (error){
-        setError(error instanceof Error ? error.message: "Erro ao carregar equipamentos.");
-      }finally{
+      } catch (error) {
+        setError(error instanceof Error ? error.message : "Erro ao carregar equipamentos.");
+      } finally {
         setLoading(false);
       }
     };
     void loadEquipments();
   }, [token]);
 
-  if (!token) { return <Navigate to="/login" replace />; }
+  if (!token) return <Navigate to="/login" replace />;
 
   return (
     <>
       <Header />
       <main className="home-container">
         <div className="home-content">
-          <h1 className="page-title">
-            Equipamentos
-          </h1>
+          <h1 className="page-title">Equipamentos</h1>
           {loading && (<div className="status-state"><p>Carregando equipamentos...</p></div>)}
           {error && (<div className="status-state error-state"><p>{error}</p></div>)}
           {!loading && !error && equipments.length === 0 && (<div className="status-state"><p>Nenhum equipamento encontrado.</p></div>)}
@@ -49,9 +59,12 @@ function Home() {
                 <article className="equipment-card" key={equipment.id}>
                   <div className="equipment-card-header">
                     <h2>{equipment.nome}</h2>
-                    <span className="type-badge"> {equipment.tipo?.nome || "Não definido"}</span>
+                    <span className="type-badge">{equipment.tipo?.nome || "Não definido"}</span>
                   </div>
-                  <div className="equipment-card-footer"> <span className="equipment-id"> ID: #{equipment.id}</span></div>
+                  <div className="equipment-card-footer">
+                    <span className="equipment-type"> Tipo: {equipment.tipo?.nome || "Não definido"}</span>
+                    <span className="equipment-id">ID: #{equipment.id}</span>
+                  </div>
                 </article>
               ))}
             </div>
