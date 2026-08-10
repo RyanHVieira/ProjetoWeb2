@@ -4,8 +4,19 @@ import Header from "../../Components/Header";
 import "../../styles/equipment-handler.css";
 import { apiFetch } from "../../services/api";
 
-interface EquipmentType {id: number; nome: string;}
-interface Equipment { id: number; nome: string; tipo?: {id: number; nome: string;};}
+interface EquipmentType {
+  id: number;
+  name: string;
+}
+
+interface Equipment {
+  id: number;
+  nome: string;
+  tipo?: {
+    id: number;
+    nome: string;
+  };
+}
 
 export default function EquipmentHandler() {
   const token = localStorage.getItem("token");
