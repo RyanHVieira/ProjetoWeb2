@@ -1,4 +1,5 @@
 using backend.Services.equipTypes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers;
@@ -16,6 +17,7 @@ public class EquipmentTypeController : ControllerBase {
         return Ok(new{equipTypes = equipTypes});
     }
 
+    
     [HttpGet("{id}")]
     public IActionResult GetEquipType(int id){
         var equipType = _equipTypeService.GetEquipTypeById(id);
@@ -24,12 +26,14 @@ public class EquipmentTypeController : ControllerBase {
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public IActionResult CreateEquipType([FromBody] string name){
         var equipType = _equipTypeService.CreateEquipType(name);
         return StatusCode(201, equipType);
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult UpdateEquipType(int id, [FromBody] string name){
         var equipType = _equipTypeService.UpdateEquipType(id, name);
         if (equipType == null) return NotFound();
@@ -37,6 +41,7 @@ public class EquipmentTypeController : ControllerBase {
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult DeleteEquipType(int id){
         var result = _equipTypeService.DeleteEquipType(id);
         if (!result) return NotFound();

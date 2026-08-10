@@ -15,7 +15,7 @@ public class EquipmentController : ControllerBase{
         _equipmentService = equipmentService;
     }
 
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public IActionResult AddEquipment([FromBody] EquipmentCreateDTO request){
         var equipment = _equipmentService.CreateEquipment(request.Nome,request.TipoId);
@@ -24,7 +24,7 @@ public class EquipmentController : ControllerBase{
         return StatusCode(201, result);
     }
 
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public IActionResult UpdateEquipment(int id, [FromBody] EquipmentUpdateDTO request){
         var result = _equipmentService.UpdateEquipment(id,request.Nome,request.Tipo?.Id);
@@ -32,7 +32,7 @@ public class EquipmentController : ControllerBase{
         return Ok();
     }
 
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public IActionResult DeleteEquipment(int id){
         var result = _equipmentService.DeleteEquipment(id);

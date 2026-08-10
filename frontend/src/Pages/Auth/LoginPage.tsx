@@ -14,15 +14,11 @@ export default function Login() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-
-      if (!response.ok) {
-        throw new Error("Usuário ou senha inválidos");
-      }
-
+      if (!response.ok) throw new Error("Usuário ou senha inválidos");
       const data = await response.json();
       localStorage.setItem("token", data.token);
       window.location.href = "/home";
-    } catch (error) {
+    }catch (error){
       console.error(error);
     }
   };

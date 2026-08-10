@@ -20,9 +20,9 @@ public class AuthController : ControllerBase{
         //valida
         var username = request.Username.Trim().ToLower();
         if(string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(request.Password)){ return BadRequest(new{message = "Falta usuário e senha"}); }
-        if(username.Length < 3 || username.Length > 30){ return BadRequest(new{message = "Usuário deve ter entre 3 e 30 caracteres"}); }
+        if(username.Length < 3 || username.Length > 30){return BadRequest(new{message = "Usuário deve ter entre 3 e 30 caracteres"}); }
         if(!IsValidPassword(request.Password)){ return BadRequest(new{message = "Senha deve ser de 8 a 40 caracteres"}); }
-        var usernameExists = _authService.GetUserByUsername(username); if(usernameExists != null){ return BadRequest(new{message = "Usuário já cadastrado"}); }
+        var usernameExists = _authService.GetUserByUsername(username); if(usernameExists != null){ return Conflict(new{message = "Usuário já cadastrado"}); }
 
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
         var user = _authService.CreateUser(username,passwordHash);
